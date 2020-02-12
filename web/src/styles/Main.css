@@ -1,0 +1,13 @@
+#main-wrapper {
+    display: flex;
+}
+
+#main {
+    background: #121212;
+    height: calc(100vh - 100px);
+    position: fixed;
+    right: 0;
+    padding: 100px 30px 0;
+    overflow-y: scroll;
+    width: calc(100vw - 250px);
+}

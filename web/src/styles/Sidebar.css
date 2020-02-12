@@ -1,0 +1,32 @@
+.sidebar {
+    background: #040404;
+    color: #fff;
+    height: calc(100vh - 100px);
+    left: 0;
+    position: fixed;
+    width: 250px;
+}
+
+.sidebar-infos {
+    padding: 30px 10px 15px;
+}
+
+.sidebar-menu {
+    margin-top: 20px;
+}
+
+.sidebar-menu li {
+    align-items: center;
+    border-radius: 4px;
+    display: flex;
+    padding: 5px 20px;
+}
+
+.sidebar-menu li.active {
+    background: #282828;
+}
+
+.sidebar-menu_icon {
+    font-size: 2.5em;
+    padding-right: 15px;
+}

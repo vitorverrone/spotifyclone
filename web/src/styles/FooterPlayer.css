@@ -1,0 +1,8 @@
+#footer-player {
+    bottom: 0;
+    flex: 1;
+    background: #282828;
+    height: 100px;
+    position: fixed;
+    width: 100%;
+}

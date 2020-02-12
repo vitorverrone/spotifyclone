@@ -1,0 +1,9 @@
+.card-item {
+    background: #272727;
+    border-radius: 6px;
+    padding: 15px;
+}
+
+.card-item__image {
+    max-width: 100%;
+}
