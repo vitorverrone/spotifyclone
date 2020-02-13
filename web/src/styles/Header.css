@@ -1,5 +1,59 @@
 .header {
+    align-items: center;
+    background: #0b0b0b;
+    display: flex;
     left: 0;
+    justify-content: space-between;
+    margin-bottom: 30px;
     grid-area: header;
     top: 0;
+    padding: 10px 10px 10px 20px;
+    position: sticky;
+    width: 100%;
+}
+
+.login-button {
+    background: #fff;
+    border: 0;
+    border-radius: 50px;
+    color: #000;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 2px;
+    padding: 12px 35px;
+    text-transform: uppercase;
+}
+
+.header-col {
+    align-items: center;
+    display: flex;
+}
+
+.arrows-navigation .arrow {
+    cursor: pointer;
+    font-size: 2em;
+}
+
+.arrows-navigation .arrow-right { margin-left: 10px; }
+
+.search-form {
+    align-items: center;
+    background: #fff;
+    display: flex;
+    border-radius: 50px;
+    margin-left: 20px;
+    padding: 10px;
+}
+
+.search-form__icon {
+    color: #000;
+    font-size: 1.5em;
+}
+
+.search-form__input {
+    border: 0;
+    margin-left: 10px;
+    width: 230px;
 }

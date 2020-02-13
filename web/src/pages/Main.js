@@ -1,11 +1,7 @@
 import React from 'react';
 
-import '../styles/global.css';
 import '../styles/Main.css';
 
-import Header from '../components/Header';
-import Sidebar from '../components/Sidebar';
-import FooterPlayer from '../components/FooterPlayer';
 import Card from '../components/Card';
 
 function Main() {
@@ -25,37 +21,28 @@ function Main() {
     }
 
 	return (
-        <>
-            <div className="main-wrapper">
-                <Sidebar />
-                <div className="main">
-                    <Header />
-                    <div className="card-group">
-                        <h3>Tocado recentemente</h3>
-                        {rows.map(elem => {
-                            return renderRow(elem)
-                        })}
-                    </div>
+        <div className="content">
+            <div className="card-group">
+                <h3>Tocado recentemente</h3>
+                {rows.map(elem => {
+                    return renderRow(elem)
+                })}
+            </div>
 
-                    <div className="card-group">
-                        <h3>Feito para xxx</h3>
-                        {rows.map(elem => {
-                            return renderRow(elem)
-                        })}
-                    </div>
+            <div className="card-group">
+                <h3>Feito para xxx</h3>
+                {rows.map(elem => {
+                    return renderRow(elem)
+                })}
+            </div>
 
-                    <div className="card-group">
-                        <h3>Não sai dos seus ouvidos</h3>
-                        {rows.map(elem => {
-                            return renderRow(elem)
-                        })}
-                    </div>
-                    
-                </div>
-                <FooterPlayer />
-		    </div>
-            
-        </>
+            <div className="card-group">
+                <h3>Não sai dos seus ouvidos</h3>
+                {rows.map(elem => {
+                    return renderRow(elem)
+                })}
+            </div>
+        </div>
 	);
 }
 

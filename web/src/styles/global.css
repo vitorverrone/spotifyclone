@@ -22,10 +22,16 @@ body,
 input,
 button { font-family: Cabin, sans-serif; }
 
+input { font-size: 1rem; }
+
 h3 { 
     font-size: 1.7em; 
     margin-bottom: 10px;
 } 
+
+.d-none { display: none !important; }
+
+.hide { opacity: 0 !important; }
 
 .card-group {
     display: grid;

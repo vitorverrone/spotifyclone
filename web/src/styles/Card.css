@@ -8,3 +8,13 @@
     margin-bottom: 10px;
     max-width: 100%;
 }
+
+.card-item__title {
+    font-size: .9rem;
+    margin-bottom: 5px;
+}
+
+.card-item__text {
+    color: #b3b3b3;
+    font-size: .7rem;
+}

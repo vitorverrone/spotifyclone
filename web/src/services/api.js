@@ -4,30 +4,46 @@ const
 
 //let accessToken;
 
-const login = function(accessToken) {
-    const url = getLoginURL([ 'user-read-email' ]);
+function verify() {
+    window.addEventListener("message", function(event) {
+        var hash = JSON.parse(event.data);
+        if (hash.type === 'access_token') {
+            console.log(hash.access_token);
+        }
+    }, false);
 
-    let
+    var hash = {};
+      
+    window.location.hash.replace(/^#\/?/, '').split('&').forEach(function(kv) {
+        var spl = kv.indexOf('=');
+        if (spl !== -1) {
+            hash[kv.substring(0, spl)] = decodeURIComponent(kv.substring(spl+1));
+        }
+    });      
+    if (hash.access_token) {
+        window.opener.postMessage(JSON.stringify({
+            type:'access_token',
+            access_token: hash.access_token,
+            expires_in: hash.expires_in || 0
+        }), '*');
+        window.close();
+    };
+};
+
+const login = function(accessToken) {
+    const 
+        url = getLoginURL([ 'user-read-email' ]),
         width = 450,
         height = 730,
         left = (window.screen.width / 2) - (width / 2),
         top = (window.screen.height / 2) - (height / 2);
-    
-    window.addEventListener("message", function(event) {
-        var hash = JSON.parse(event.data);
-        if (hash.type === 'access_token') {
-            accessToken(hash.access_token);
-        }
-    }, false);
         
-    var w = window.open(url, 'Spotify', 'menubar=no,location=no,resizable=no,scrollbars=no,status=no, width=' + width + ', height=' + height + ', top=' + top + ', left=' + left);
+    window.open(url, 'Spotify', 'menubar=no,location=no,resizable=no,scrollbars=no,status=no, width=' + width + ', height=' + height + ', top=' + top + ', left=' + left);
 }
 
 function loginApi() {
     login(function(accessToken) {
-        getUserData(accessToken).then(function(response) {
-            console.log('response', response);
-        });
+        getUserData(accessToken);
     });
 };
 
@@ -47,4 +63,7 @@ function getLoginURL(scopes) {
       '&response_type=token';
 }
 
-export default loginApi;
+export {
+    loginApi,
+    verify
+};
