@@ -3,30 +3,43 @@
     color: #fff;
     height: calc(100vh - 100px);
     left: 0;
-    position: fixed;
-    width: 250px;
+    grid-area: sidebar;
 }
 
-.sidebar-infos {
-    padding: 30px 10px 15px;
+.sidebar li { opacity: .7; }
+
+.sidebar li:hover { opacity: 1; }
+
+.sidebar-items {
+    padding: 30px 25px 0;
 }
 
-.sidebar-menu {
-    margin-top: 20px;
+.sidebar-list {
+    margin: 0 -15px 5px;
 }
 
-.sidebar-menu li {
+.sidebar-list li {
     align-items: center;
     border-radius: 4px;
     display: flex;
-    padding: 5px 20px;
+    padding: 5px 15px;
 }
 
-.sidebar-menu li.active {
+.sidebar-list li.active {
     background: #282828;
 }
 
-.sidebar-menu_icon {
+.sidebar-list_icon {
     font-size: 2.5em;
     padding-right: 15px;
+}
+
+.sidebar-divider {
+    border-color: #282828;
+    height: 1px;
+    margin: 0 25px;
+}
+
+.sidebar-playlists {
+    padding: 15px 25px;
 }

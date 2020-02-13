@@ -1,13 +1,18 @@
-#main-wrapper {
-    display: flex;
+.main-wrapper {
+    display: grid;
+    grid-template-areas: 
+    'sidebar main'
+    'sidebar main'
+    'footer footer';
+    grid-template-columns: 250px;
 }
 
-#main {
+.main {
     background: #121212;
     height: calc(100vh - 100px);
-    position: fixed;
+    grid-area: main;
     right: 0;
     padding: 100px 30px 0;
     overflow-y: scroll;
-    width: calc(100vw - 250px);
+    width: 1fr;
 }

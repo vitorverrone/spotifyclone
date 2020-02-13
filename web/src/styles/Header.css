@@ -1,0 +1,5 @@
+.header {
+    left: 0;
+    grid-area: header;
+    top: 0;
+}

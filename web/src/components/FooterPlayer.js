@@ -4,7 +4,7 @@ import '../styles/FooterPlayer.css';
 
 function FooterPlayer() {
 	return (
-        <div id="footer-player"></div>
+        <div className="footer-player"></div>
 	);
 }
 

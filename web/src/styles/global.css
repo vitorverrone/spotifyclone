@@ -37,6 +37,11 @@ h3 {
     overflow: hidden;
 }
 
-.spotify-logo--text {
+.card-group h3 {
+    grid-column: 1/-1;
+}
+
+.spotify-logo {
+    margin-bottom: 20px;
     width: 131px;
 }
