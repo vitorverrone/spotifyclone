@@ -1,14 +1,14 @@
+import { setCookie } from './cookies';
+
 const 
     CLIENT_ID = '00fb90fe315a482b9b138ed88f703434',
     REDIRECT_URI = 'http://localhost:3000';
-
-//let accessToken;
 
 function verify() {
     window.addEventListener("message", function(event) {
         var hash = JSON.parse(event.data);
         if (hash.type === 'access_token') {
-            console.log(hash.access_token);
+            setCookie('access_token', hash.access_token, 1);
         }
     }, false);
 
@@ -20,6 +20,7 @@ function verify() {
             hash[kv.substring(0, spl)] = decodeURIComponent(kv.substring(spl+1));
         }
     });      
+
     if (hash.access_token) {
         window.opener.postMessage(JSON.stringify({
             type:'access_token',
@@ -28,9 +29,11 @@ function verify() {
         }), '*');
         window.close();
     };
+
+    return 'oi';
 };
 
-const login = function(accessToken) {
+const login = function() {
     const 
         url = getLoginURL([ 'user-read-email' ]),
         width = 450,
@@ -41,19 +44,16 @@ const login = function(accessToken) {
     window.open(url, 'Spotify', 'menubar=no,location=no,resizable=no,scrollbars=no,status=no, width=' + width + ', height=' + height + ', top=' + top + ', left=' + left);
 }
 
-function loginApi() {
-    login(function(accessToken) {
-        getUserData(accessToken);
-    });
-};
-
-function getUserData(accessToken) {
+async function getUserData(accessToken) {
     const config = {
         headers: {
             'Authorization': 'Bearer ' + accessToken
         },
     };
-    return fetch('https://api.spotify.com/v1/me', config);
+    const response = await fetch('https://api.spotify.com/v1/me', config).then(response => response.json());
+    window.store = {
+        response
+    };
 }
 
 function getLoginURL(scopes) {
@@ -64,6 +64,7 @@ function getLoginURL(scopes) {
 }
 
 export {
-    loginApi,
-    verify
+    login,
+    verify,
+    getUserData
 };

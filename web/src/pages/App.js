@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-import { verify } from '../services/api';
+import { verify, getUserData } from '../services/api';
+
+import { getCookie } from '../services/cookies';
 
 import '../styles/global.css';
 
@@ -12,7 +14,13 @@ import FooterPlayer from '../components/FooterPlayer';
 
 function App() {
     useEffect(() => {
-        verify();
+        console.log('verify', verify());
+        if(getCookie('access_token')) {
+            async function lala() {
+                return await getUserData(getCookie('access_token'));
+            } 
+            console.log(lala());
+        }
     }, []);
 
 	return (

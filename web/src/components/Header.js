@@ -5,7 +5,7 @@ import { useRouteMatch } from 'react-router-dom';
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from 'react-icons/md';
 import { AiOutlineSearch } from 'react-icons/ai';
 
-import { loginApi } from '../services/api';
+import { login } from '../services/api';
 import searchApi from '../services/api-search';
 
 import '../styles/Header.css';
@@ -34,7 +34,7 @@ function Header() {
                 </form>
             </div>
             <div className="header-col">
-                <button className="login-button" onClick={loginApi}>Entrar</button>
+                <button className="login-button" onClick={login}>Entrar</button>
             </div>
         </div>
 	);
