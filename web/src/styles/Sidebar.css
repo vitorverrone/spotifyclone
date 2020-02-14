@@ -42,4 +42,13 @@
 
 .sidebar-playlists {
     padding: 15px 25px;
+    max-height: 250px;
+    overflow-y: scroll;
+}
+
+.sidebar-playlists li {
+    margin: 10px 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }

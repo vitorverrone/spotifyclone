@@ -2,7 +2,8 @@ import { setCookie } from './cookies';
 
 const 
     CLIENT_ID = '00fb90fe315a482b9b138ed88f703434',
-    REDIRECT_URI = 'http://localhost:3000';
+    REDIRECT_URI = 'http://localhost:3000',
+    BASE_URL = 'https://api.spotify.com/v1';
 
 function verify() {
     window.addEventListener("message", function(event) {
@@ -29,13 +30,11 @@ function verify() {
         }), '*');
         window.close();
     };
-
-    return 'oi';
 };
 
 const login = function() {
     const 
-        url = getLoginURL([ 'user-read-email' ]),
+        url = getLoginURL([ 'user-library-read', 'user-read-email', 'playlist-read-private', 'playlist-read-collaborative' ]),
         width = 450,
         height = 730,
         left = (window.screen.width / 2) - (width / 2),
@@ -51,9 +50,7 @@ async function getUserData(accessToken) {
         },
     };
     const response = await fetch('https://api.spotify.com/v1/me', config).then(response => response.json());
-    window.store = {
-        response
-    };
+    return response;
 }
 
 function getLoginURL(scopes) {
@@ -64,6 +61,7 @@ function getLoginURL(scopes) {
 }
 
 export {
+    BASE_URL,
     login,
     verify,
     getUserData

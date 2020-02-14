@@ -10,6 +10,7 @@
     padding: 10px 10px 10px 20px;
     position: sticky;
     width: 100%;
+    z-index: 5;
 }
 
 .login-button {
@@ -56,4 +57,47 @@
     border: 0;
     margin-left: 10px;
     width: 230px;
+}
+
+.user-header {
+    align-items: center;
+    background: #282828;
+    border-radius: 50px;
+    cursor: pointer;
+    display: flex;
+    padding: 5px 10px;
+    position: relative;
+}
+
+.user-header__icon { font-size: 1.5rem; }
+
+.user-header.active .user-header__menu { display: block; }
+
+.user-header.active .user-header__arrow { transform: rotate(180deg); }
+
+.user-header__menu {
+    border-radius: 4px;
+    display: none;
+    margin-top: 5px;
+    top: 100%;
+    right: 0;
+    position: absolute;
+}
+
+.user-header__menu li { 
+    background: #282828;
+    opacity: .8; 
+}
+
+.user-header__menu li:hover { opacity: 1; }
+
+.user-header__menu li {
+    cursor: pointer;
+    display: block;
+    padding: 15px 30px;
+}
+
+.user-header__name {
+    font-size: .8rem;
+    margin: 0 5px;
 }

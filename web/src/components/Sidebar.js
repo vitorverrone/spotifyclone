@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import '../styles/Sidebar.css';
 
 import { Link, useRouteMatch } from 'react-router-dom';
 
 import { AiFillHome, AiOutlineSearch, AiOutlineBars, AiOutlinePlusSquare, AiFillHeart } from 'react-icons/ai';
 
-function Sidebar() {
+function Sidebar({ playlists }) {
     function OldSchoolMenuLink({ label, to, activeOnlyWhenExact, icon }) {
         const match = useRouteMatch({
           path: to,
@@ -20,7 +20,32 @@ function Sidebar() {
                 </li>
             </Link>
         );
-      }
+    };
+
+
+    useEffect(() => {
+        Playlists()
+    }, [playlists]);
+
+    function Playlists() {
+        if(playlists && playlists.length) {
+            return (
+                <>
+                    <ul className="sidebar-playlists">
+                        {playlists.map(key => {
+                            return (
+                                <li key={key.id}>{key['name']}</li>
+                            );
+                        })}
+                    </ul>
+                </>
+            )
+        }
+        return (
+            <></>
+        )
+    }
+    
 	return (
         <div className="sidebar">
             <div className="sidebar-items">
@@ -33,26 +58,11 @@ function Sidebar() {
                 <h5>PLAYLISTS</h5>
                 <ul className="sidebar-list">
                     <li><AiOutlinePlusSquare className="sidebar-list_icon" />Criar playlist</li>
-                    <li><AiFillHeart className="sidebar-list_icon" />Músicas curtidas</li>
+                    <OldSchoolMenuLink to="/collection/tracks" label="Músicas curtidas" icon={<AiFillHeart className="sidebar-list_icon" />} />
                 </ul>
             </div>
             <hr className="sidebar-divider"/>
-            <ul className="sidebar-playlists">
-                <li>Tech to house</li>
-                <li>Tech to house</li>
-                <li>Tech to house</li>
-                <li>Tech to house</li>
-                <li>Tech to house</li>
-                <li>Tech to house</li>
-                <li>Tech to house</li>
-                <li>Tech to house</li>
-                <li>Tech to house</li>
-                <li>Tech to house</li>
-                <li>Tech to house</li>
-                <li>Tech to house</li>
-                <li>Tech to house</li>
-                <li>Tech to house</li>
-            </ul>
+            <Playlists />
         </div>
 	);
 }
