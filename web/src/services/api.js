@@ -7,9 +7,9 @@ const
 
 function verify() {
     window.addEventListener("message", function(event) {
-        var hash = JSON.parse(event.data);
-        if (hash.type === 'access_token') {
-            setCookie('access_token', hash.access_token, 1);
+        if(event.data.type === 'access_token') {
+            const access_token = event.data.access_token;
+            setCookie('access_token', access_token, 1);
         }
     }, false);
 
@@ -23,7 +23,7 @@ function verify() {
     });      
 
     if (hash.access_token) {
-        window.opener.postMessage(JSON.stringify({
+        window.opener.postMessage(({
             type:'access_token',
             access_token: hash.access_token,
             expires_in: hash.expires_in || 0
