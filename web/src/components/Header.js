@@ -10,7 +10,7 @@ import searchApi from '../services/api-search';
 
 import '../styles/Header.css';
 
-function Header() {
+function Header({ updateCards }) {
     let showForm;
     
     const match = useRouteMatch({ path: '/search', exact: false });
@@ -18,7 +18,7 @@ function Header() {
 
     async function searchSomething(text) {
         const response = await searchApi(text);
-        console.log(response);
+        updateCards(response);
     }
 
 	return (

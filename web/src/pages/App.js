@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import { verify, getUserData } from '../services/api';
@@ -13,6 +13,12 @@ import Main from './Main';
 import FooterPlayer from '../components/FooterPlayer';
 
 function App() {
+    const [cardData, setcardData] = useState([]);
+
+    function updateCards(childData) {
+        setcardData(childData);
+    };
+
     useEffect(() => {
         console.log('verify', verify());
         if(getCookie('access_token')) {
@@ -29,9 +35,9 @@ function App() {
                 <div className="main-wrapper">
                     <Sidebar />
                     <div className="main">
-                        <Header />
-                        <Route exact path="/"> <Main /> </Route>
-                        <Route path='/' exact component={Main}/>
+                        <Header updateCards={updateCards}/>
+                        <Route exact path="/"> <Main cards={cardData} /> </Route>
+                        <Route path="/search"> <Main cards={cardData} /> </Route>
                     </div>
                     <FooterPlayer />
                 </div>

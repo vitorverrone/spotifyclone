@@ -1,5 +1,5 @@
 const searchApi = function(text) {
-    const accessToken = 'BQDBTzyFN8njcfvHKQgCNAO52QKwfhbaaxN-U_SIo8oyIb1wCBpGtt83MvpK6oyQRyKRm3jOyj0CNOjxiCk';
+    const accessToken = 'BQA1QyfeB57BRPurXeEGSGsIkU5gyPyB45osclf4IyZB2L9Kg6Kq51iUa4GJOIMNxy9Oa0hqdZCKhtIeGnqM1Q-_c_5SCu3v0DVXPIQPAszjL6vATsSQIrv6Thg-5K04q1OXkbm8KRxdULUBrFBq5w';
     const config = {
         headers: {
             'authorization': `Bearer ${accessToken}`
