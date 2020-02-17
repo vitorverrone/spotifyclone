@@ -51,15 +51,15 @@ const login = function() {
 }
 
 async function getUserData() {
-    const response = await fetch(`${BASE_URL}/me`, CONFIG).then(response => {
-        if (response.ok) { 
-            response.json();  
+    const response = await fetch(`${BASE_URL}/me`, CONFIG)
+        .then(res => res.json())
+        .then((result) => {
+            return result;
+        },
+        (error) => {
+            
         }
-        else { 
-            console.log('erro aquie');
-            throw new Error('Something went wrong'); 
-        }
-    }).catch(error => console.log('deu erro aqui', error));
+    );
     return response;
 }
 
