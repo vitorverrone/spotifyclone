@@ -42,7 +42,7 @@
 
 .sidebar-playlists {
     padding: 15px 25px;
-    max-height: 250px;
+    max-height: 207px;
     overflow-y: scroll;
 }
 
@@ -51,4 +51,17 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+
+.sidebar__track-image {
+    margin-top: 20px;
+    padding-top: 100%;
+    position: relative;
+}
+
+.sidebar__track-image img {
+    max-width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
 }

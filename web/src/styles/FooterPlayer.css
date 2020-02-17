@@ -2,16 +2,35 @@
     align-items: center;
     bottom: 0;
     background: #282828;
-    display: flex;
+    display: grid;
     grid-area: footer;
     justify-content: space-between;
     height: 100px;
+    padding: 15px;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.footer-player__current-track {
+    font-size: .9em;
+}
+
+.footer-player__current-artists {
+    font-size: .8em;
+    margin-top: 5px;
+    opacity: .7;
 }
 
 .footer-player__controls {
+    justify-self: center;
+    text-align: center;
+}
+
+.footer-player__controls-song {
     align-items: center;
     display: flex;
     justify-content: space-between;
+    margin: auto;
+    max-width: 130px;
 }
 
 .footer-player__controls-play-pause {
@@ -27,3 +46,25 @@
 }
 .footer-player__controls-play-pause:not(.-true) .--pause { display: none; }
 .footer-player__controls-play-pause.-true .--play{ display: none; }
+
+.footer-player__controls-progress {
+    align-items: center;
+    display: flex;
+    margin-top: 10px;
+}
+
+.footer-player__controls-progress-bar {
+    background: #4e4e4e;
+    border-radius: 100px;
+    margin: 0 10px;
+    height: 5px;
+    position: relative;
+    width: 400px;
+}
+
+.footer-player__controls-progress-bar .percentage {
+    background: #d6d4d4;
+    border-radius: 100px;
+    height: 100%;
+    position: absolute;
+}

@@ -8,4 +8,14 @@ function joinArtists(artists) {
     return newArtists.join(', ');
 }
 
-export { joinArtists }
+function convertDuration(duration) {
+    const 
+        minutes = Math.floor(duration / 60000),
+        seconds = ((duration % 60000) / 1000).toFixed(0);
+    return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
+}
+
+export { 
+    joinArtists,
+    convertDuration
+}

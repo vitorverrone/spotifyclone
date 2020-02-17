@@ -5,7 +5,7 @@ import { Link, useRouteMatch } from 'react-router-dom';
 
 import { AiFillHome, AiOutlineSearch, AiOutlineBars, AiOutlinePlusSquare, AiFillHeart } from 'react-icons/ai';
 
-function Sidebar({ playlists }) {
+function Sidebar({ playlists, currentlyPlaying }) {
     function OldSchoolMenuLink({ label, to, activeOnlyWhenExact, icon }) {
         const match = useRouteMatch({
           path: to,
@@ -45,6 +45,23 @@ function Sidebar({ playlists }) {
             <></>
         )
     }
+
+    function ImageCurrentSong() {
+        if(currentlyPlaying && currentlyPlaying['item']) {
+            const 
+                track = currentlyPlaying['item'],
+                trackName = track['name'],
+                trackImage = track['album']['images'][0]['url'];
+            return (
+                <div className="sidebar__track-image">
+                    <img src={trackImage} alt={trackName} />
+                </div>
+            )
+        }
+        return (
+            <></>
+        )
+    }
     
 	return (
         <div className="sidebar">
@@ -63,6 +80,7 @@ function Sidebar({ playlists }) {
             </div>
             <hr className="sidebar-divider"/>
             <Playlists />
+            <ImageCurrentSong />
         </div>
 	);
 }

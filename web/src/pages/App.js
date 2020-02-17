@@ -27,7 +27,6 @@ function App() {
     };
 
     async function userDataFunction() {
-        
         const response = await getUserData();
         console.log('entrou aqui', response);
         if(response) {
@@ -63,7 +62,7 @@ function App() {
         <Router>
             <Switch>
                 <div className="main-wrapper">
-                    <Sidebar playlists={userPlaylists} />
+                    <Sidebar playlists={userPlaylists} currentlyPlaying={currentlyPlaying} />
                     <div className="main">
                         <Header updateCards={updateCards} userData={userData} userCallbackFunction={useSetUserData}/>
                         <Route exact path="/"> <Main cards={cardData} /> </Route>
