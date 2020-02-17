@@ -1,15 +1,22 @@
-import { setCookie } from './cookies';
+import { setCookie, getCookie } from './cookies';
 
 const 
     CLIENT_ID = '00fb90fe315a482b9b138ed88f703434',
     REDIRECT_URI = 'http://localhost:3000',
-    BASE_URL = 'https://api.spotify.com/v1';
+    BASE_URL = 'https://api.spotify.com/v1',
+    ACCESS_TOKEN = getCookie('access_token'),
+    CONFIG = {
+        headers: {
+            'authorization': `Bearer ${ACCESS_TOKEN}`
+        },
+    };
 
 function verify() {
     window.addEventListener("message", function(event) {
         if(event.data.type === 'access_token') {
             const access_token = event.data.access_token;
-            setCookie('access_token', access_token, 1);
+            setCookie('access_token', access_token, event.data.expires_in);
+            return true;
         }
     }, false);
 
@@ -34,7 +41,7 @@ function verify() {
 
 const login = function() {
     const 
-        url = getLoginURL([ 'user-library-read', 'user-read-email', 'playlist-read-private', 'playlist-read-collaborative' ]),
+        url = getLoginURL([ 'user-library-read', 'user-read-email', 'playlist-read-private', 'playlist-read-collaborative', 'user-read-currently-playing', 'user-read-playback-state', 'user-modify-playback-state' ]),
         width = 450,
         height = 730,
         left = (window.screen.width / 2) - (width / 2),
@@ -43,13 +50,16 @@ const login = function() {
     window.open(url, 'Spotify', 'menubar=no,location=no,resizable=no,scrollbars=no,status=no, width=' + width + ', height=' + height + ', top=' + top + ', left=' + left);
 }
 
-async function getUserData(accessToken) {
-    const config = {
-        headers: {
-            'Authorization': 'Bearer ' + accessToken
-        },
-    };
-    const response = await fetch('https://api.spotify.com/v1/me', config).then(response => response.json());
+async function getUserData() {
+    const response = await fetch(`${BASE_URL}/me`, CONFIG).then(response => {
+        if (response.ok) { 
+            response.json();  
+        }
+        else { 
+            console.log('erro aquie');
+            throw new Error('Something went wrong'); 
+        }
+    }).catch(error => console.log('deu erro aqui', error));
     return response;
 }
 
@@ -62,6 +72,7 @@ function getLoginURL(scopes) {
 
 export {
     BASE_URL,
+    CONFIG,
     login,
     verify,
     getUserData

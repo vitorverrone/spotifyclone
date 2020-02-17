@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import { verify, getUserData } from '../services/api';
 import { getUsersPlaylist } from '../services/api-search';
+import { getUserCurrentlyPlaying } from '../services/api-player';
 
 import { getCookie } from '../services/cookies';
 
@@ -18,15 +19,19 @@ function App() {
     const 
         [cardData, setcardData] = useState([]),
         [userData, setUserData] = useState([]),
-        [userPlaylists, setUserPlaylists] = useState([]);
+        [userPlaylists, setUserPlaylists] = useState([]),
+        [currentlyPlaying, setcurrentlyPlaying] = useState([]);
 
     function updateCards(childData) {
         setcardData(childData);
     };
 
-    async function userDataFunction(access_token) {
-        const response = await getUserData(access_token);
+    async function userDataFunction() {
+        
+        const response = await getUserData();
+        console.log('entrou aqui', response);
         if(response) {
+            console.log('entrou aqui if');
             setUserData(response); 
             const playlists = await getUsersPlaylist(response.id);
             setUserPlaylists(playlists['items']);
@@ -36,10 +41,23 @@ function App() {
     function useSetUserData(newData) { setUserData(newData) }
 
     useEffect(() => {
+        if(verify()) { userDataFunction() }
+    }, []);
+
+    useEffect(() => {
         verify();
         const access_token = getCookie('access_token');
-        if(access_token) { userDataFunction(access_token) }
+        if(access_token) {
+            userDataFunction(access_token);
+            currentlyPlayingFunction();
+        }
     }, []);
+
+
+    async function currentlyPlayingFunction() {
+        const response = await getUserCurrentlyPlaying();
+        setcurrentlyPlaying(response);
+    }
 
 	return (
         <Router>
@@ -52,7 +70,7 @@ function App() {
                         <Route path="/search"> <Main cards={cardData} /> </Route>
                         <Route path="/collection/tracks"> <CollectionTracks /> </Route>
                     </div>
-                    <FooterPlayer />
+                    <FooterPlayer currentlyPlaying={currentlyPlaying}/>
                 </div>
             </Switch>
         </Router>

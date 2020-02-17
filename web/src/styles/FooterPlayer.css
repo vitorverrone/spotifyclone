@@ -1,6 +1,28 @@
 .footer-player {
+    align-items: center;
     bottom: 0;
     background: #282828;
+    display: flex;
     grid-area: footer;
+    justify-content: space-between;
     height: 100px;
 }
+
+.footer-player__controls {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+}
+
+.footer-player__controls-play-pause {
+    align-items: center;
+    border: 1px solid #fff;
+    border-radius: 100%;
+    justify-content: center;
+    display: flex;
+    margin: 0 15px;
+    height: 40px;
+    width: 40px;
+}
+.footer-player__controls-play-pause:not(.-true) .--pause { display: none; }
+.footer-player__controls-play-pause.-true .--play{ display: none; }
