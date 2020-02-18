@@ -13,15 +13,53 @@ import { FiVolume2 } from 'react-icons/fi';
 function FooterPlayer({ currentlyPlaying }) {
 	const 
 		[isPlaying, setIsPlaying] = useState(false),
+		[play, setPlay] = useState(null),
 		[currentSong, setCurrentSong] = useState(''),
 		[currentArtists, setCurrentArtists]  = useState(''),
-		[trackDuration, setTrackDuration]  = useState(''),
-		[trackProgress, setTrackProgress]  = useState(''),
-		[trackPercentage, setTrackPercentage]  = useState('');
+		[trackDuration, setTrackDuration]  = useState('0:00'),
+		[trackDurationMS, setTrackDurationMS]  = useState('0:00'),
+		[trackProgressMS, setTrackProgressMS]  = useState(''),
+		[trackProgress, setTrackProgress]  = useState('0:00'),
+		[trackPercentage, setTrackPercentage]  = useState('0');
 
 	function setPlayerStateFunction (state, method = 'PUT') {
-		setPlayerState(state, method)
+		console.log('clicou');
+		if(trackProgressMS) {
+			setPlayerState(state, method);
+		}
+		if(state === 'pause') {
+			console.log('pausou');
+			setIsPlaying(clearInterval(play));
+		}
 	}
+
+	function playSong() {
+		setPlay(() => {
+			setInterval(() => {
+				setTrackProgressMS((trackProgressMS) => {
+					return trackProgressMS+1000;
+				});
+			}, 1000); 
+		});
+	}
+
+	function getPercentage() {
+		const 
+			duration_ms = trackDurationMS,
+			progress_ms = trackProgressMS,
+			percent = parseInt((100 * progress_ms) / duration_ms);
+
+		return percent;
+	}
+
+	useEffect(() => {
+		setTrackProgress(convertDuration(trackProgressMS));
+
+		const percent = getPercentage();
+		setTrackPercentage(percent);
+	}, [trackProgressMS])
+
+	// const playSong = 
 
 	useEffect(() => {
 		if(currentlyPlaying) {
@@ -29,37 +67,37 @@ function FooterPlayer({ currentlyPlaying }) {
 			if(track) {	
 				const 
 					duration_ms = track['duration_ms'],
-					progress_ms = currentlyPlaying['progress_ms'],
-					percent = parseInt((100 * progress_ms) / duration_ms);
+					progress_ms = currentlyPlaying['progress_ms'];
+
+				setTrackProgressMS(progress_ms);
+				setTrackDurationMS(duration_ms);
 
 				setTrackDuration(convertDuration(duration_ms));
 				setTrackProgress(convertDuration(progress_ms));
-				setTrackPercentage(percent);
+				setTrackPercentage(getPercentage());
 				setCurrentArtists(joinArtists(track['artists']));
 				setCurrentSong(track['name']);
 			}
 			setIsPlaying(currentlyPlaying['is_playing']);
+			if(currentlyPlaying['is_playing']) {
+				playSong();
+			}
 		}
 	}, [currentlyPlaying]);
 
 	function TrackProgress() {
-		if(trackProgress) {
-			const divStyle = {
-				width: `${trackPercentage}%`
-			};
-			return (
-				<>
-					{trackProgress}
-					<div className="footer-player__controls-progress-bar">
-						<div className="percentage" style={divStyle}></div>
-					</div>
-					{trackDuration}
-				</>
-			)
-		}
+		const divStyle = {
+			width: `${trackPercentage}%`
+		};
 		return (
-			<></>
-		);
+			<>
+				{trackProgress}
+				<div className="footer-player__controls-progress-bar">
+					<div className="percentage" style={divStyle}></div>
+				</div>
+				{trackDuration}
+			</>
+		)
 	}
 
 	return (
