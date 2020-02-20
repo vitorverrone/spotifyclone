@@ -41,7 +41,7 @@ function verify() {
 
 const login = function() {
     const 
-        url = getLoginURL([ 'user-library-read', 'user-read-email', 'playlist-read-private', 'playlist-read-collaborative', 'user-read-currently-playing', 'user-read-playback-state', 'user-modify-playback-state' ]),
+        url = getLoginURL([ 'user-library-read', 'user-read-email', 'playlist-read-private', 'playlist-read-collaborative', 'user-read-currently-playing', 'user-read-playback-state', 'user-modify-playback-state', 'streaming', 'user-read-private' ]),
         width = 450,
         height = 730,
         left = (window.screen.width / 2) - (width / 2),

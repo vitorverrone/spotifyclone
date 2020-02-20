@@ -40,7 +40,14 @@ function App() {
     function useSetUserData(newData) { setUserData(newData) }
 
     useEffect(() => {
-        if(verify()) { userDataFunction() }
+
+        const script = document.createElement('script');
+        script.src = "https://sdk.scdn.co/spotify-player.js";
+        script.async = true;
+        document.body.appendChild(script);
+        document.body.removeChild(script);
+
+        if(verify()) { userDataFunction(); }
     }, []);
 
     useEffect(() => {
