@@ -1,11 +1,17 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../styles/Sidebar.css';
 
 import { Link, useRouteMatch } from 'react-router-dom';
 
+import { PLAYER } from '../services/api-player';
+
 import { AiFillHome, AiOutlineSearch, AiOutlineBars, AiOutlinePlusSquare, AiFillHeart } from 'react-icons/ai';
 
 function Sidebar({ playlists, currentlyPlaying }) {
+    const 
+        [trackImage, setTrackImage] = useState(''),
+        [trackName, setTrackName] = useState('');
+
     function OldSchoolMenuLink({ label, to, activeOnlyWhenExact, icon }) {
         const match = useRouteMatch({
           path: to,
@@ -46,12 +52,16 @@ function Sidebar({ playlists, currentlyPlaying }) {
         )
     }
 
+    if(PLAYER) {
+		PLAYER.addListener('player_state_changed', state => {
+			const track = state['track_window']['current_track'];
+			setTrackImage(track['album']['images'][0]['url']);
+			setTrackName(track['name']);
+		});
+	}
+
     function ImageCurrentSong() {
-        if(currentlyPlaying && currentlyPlaying['item']) {
-            const 
-                track = currentlyPlaying['item'],
-                trackName = track['name'],
-                trackImage = track['album']['images'][0]['url'];
+        if(trackImage) {
             return (
                 <div className="sidebar__track-image">
                     <img src={trackImage} alt={trackName} />

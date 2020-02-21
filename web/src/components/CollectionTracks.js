@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import { getUserLikedTracks } from '../services/api-search';
+import { playSong } from '../services/api-player';
 
 import { joinArtists } from '../services/general';
 
@@ -46,10 +47,11 @@ function CollectionTracks() {
                             trackName = track['name'],
                             artists = joinArtists(track['artists']),
                             album = track['album']['name'],
-                            duration = track['duration_ms'];
+                            duration = track['duration_ms'],
+                            uri = track['uri'];
 
                         return (
-                            <li key={track.id} className="liked-tracks__track">
+                            <li key={track.id} onClick={e => playSong(uri)} className="liked-tracks__track">
                                 <div className="liked-tracks__track-icon">
                                     <IoMdMusicalNote/>
                                 </div>
