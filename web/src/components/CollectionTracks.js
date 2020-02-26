@@ -21,6 +21,7 @@ function CollectionTracks() {
 
     async function getLikedTracks() {
         const response = await getUserLikedTracks();
+        console.log('response', response);
         setTotalTracks(response.total);
         setLikedTracks(response['items']);
     }

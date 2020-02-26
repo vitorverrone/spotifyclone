@@ -98,6 +98,8 @@
     margin: 0 10px;
     height: 5px;
     position: relative;
+    overflow: hidden;
+    max-width: 100px;
     width: 100px;
 }
 

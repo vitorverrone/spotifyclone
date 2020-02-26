@@ -56,6 +56,11 @@ function FooterPlayer() {
 			click = e.screenX,
 			percent = Math.abs((total - click) - 100);
 
+		console.log('coisas', e.target.getBoundingClientRect());
+		console.log('coisas la', e.screenX);
+		console.log('coisas la', e.screenY);
+		console.log('total', total);
+		console.log('click', click);
 		setVolumePercentage(percent);
 	}
 

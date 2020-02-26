@@ -4,6 +4,9 @@
     height: calc(100vh - 100px);
     left: 0;
     grid-area: sidebar;
+    position: relative;
+    display: flex;
+    flex-direction: column;
 }
 
 .sidebar li { opacity: .7; }
@@ -42,8 +45,8 @@
 
 .sidebar-playlists {
     padding: 15px 25px;
-    max-height: 207px;
-    overflow-y: scroll;
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
 }
 
 .sidebar-playlists li {

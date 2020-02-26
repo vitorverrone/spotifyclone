@@ -80,7 +80,7 @@ function Sidebar({ playlists, currentlyPlaying }) {
                 <ul className="sidebar-list">
                     <OldSchoolMenuLink activeOnlyWhenExact={true} to="/" label="Início" icon={<AiFillHome className="sidebar-list_icon" />} />
                     <OldSchoolMenuLink to="/search" label="Buscar" icon={<AiOutlineSearch className="sidebar-list_icon" />} />
-                    <OldSchoolMenuLink to="/your-library" label="Sua biblioteca" icon={<AiOutlineBars className="sidebar-list_icon" />} />
+                    <OldSchoolMenuLink to="/collection/playlists" label="Sua biblioteca" icon={<AiOutlineBars className="sidebar-list_icon" />} />
                 </ul>
                 <h5>PLAYLISTS</h5>
                 <ul className="sidebar-list">

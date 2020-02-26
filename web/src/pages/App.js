@@ -13,6 +13,7 @@ import Header from '../components/Header';
 import Sidebar from '../components/Sidebar';
 import Main from './Main';
 import FooterPlayer from '../components/FooterPlayer';
+import Collection from './Collection';
 import CollectionTracks from '../components/CollectionTracks';
 
 function App() {
