@@ -1,16 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import '../styles/Sidebar.css';
 
 import { Link, useRouteMatch } from 'react-router-dom';
 
-import { PLAYER } from '../services/api-player';
-
 import { AiFillHome, AiOutlineSearch, AiOutlineBars, AiOutlinePlusSquare, AiFillHeart } from 'react-icons/ai';
 
-function Sidebar({ playlists, currentlyPlaying }) {
-    const 
-        [trackImage, setTrackImage] = useState(''),
-        [trackName, setTrackName] = useState('');
+function Sidebar({ playlists }) {
 
     function OldSchoolMenuLink({ label, to, activeOnlyWhenExact, icon }) {
         const match = useRouteMatch({
@@ -51,27 +46,6 @@ function Sidebar({ playlists, currentlyPlaying }) {
             <></>
         )
     }
-
-    if(PLAYER) {
-		PLAYER.addListener('player_state_changed', state => {
-			const track = state['track_window']['current_track'];
-			setTrackImage(track['album']['images'][0]['url']);
-			setTrackName(track['name']);
-		});
-	}
-
-    function ImageCurrentSong() {
-        if(trackImage) {
-            return (
-                <div className="sidebar__track-image">
-                    <img src={trackImage} alt={trackName} />
-                </div>
-            )
-        }
-        return (
-            <></>
-        )
-    }
     
 	return (
         <div className="sidebar">
@@ -90,7 +64,6 @@ function Sidebar({ playlists, currentlyPlaying }) {
             </div>
             <hr className="sidebar-divider"/>
             <Playlists />
-            <ImageCurrentSong />
         </div>
 	);
 }

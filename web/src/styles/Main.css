@@ -9,12 +9,14 @@
 
 .main {
     background: #121212;
-    height: calc(100vh - 100px);
+    height: calc(100vh - 99px);
     grid-area: main;
     right: 0;
     overflow-y: scroll;
     width: 1fr;
 }
+
+.-device .main { height: calc(100vh - 129px); }
 
 a {
     color: inherit;

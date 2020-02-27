@@ -57,15 +57,37 @@ const playSong = (uri) => {
 
 const resumeSong = () => PLAYER.resume();
 const pauseSong = () => PLAYER.pause();
-const nextSong = () => {
-    PLAYER.nextTrack().then(() => {
-    console.log('Skipped to next track!');
-  });
-}
+const nextSong = () => PLAYER.nextTrack();
 const previousSong = () => PLAYER.previousTrack();
 
-const getUserCurrentlyPlaying = () => {
-    return fetch(`${BASE_URL}/me/player/currently-playing`, CONFIG)
+const getUserCurrentlyPlayer = () => {
+    return fetch(`${BASE_URL}/me/player`, CONFIG)
+        .then(res => res.json())
+        .then((result) => {
+            return result;
+        },
+        (error) => {
+            
+        }
+    );
+}
+
+const getUserAvailableDevices = () => {
+    return fetch(`${BASE_URL}/me/player/devices`, CONFIG)
+        .then(res => res.json())
+        .then((result) => {
+            return result;
+        },
+        (error) => {
+            
+        }
+    );
+}
+
+const changePlayback = (device_id) => {
+    CONFIG['method'] = 'PUT';
+    CONFIG['body'] = JSON.stringify({ device_ids: [device_id] });
+    return fetch(`${BASE_URL}/me/player`, CONFIG)
         .then(res => res.json())
         .then((result) => {
             return result;
@@ -77,7 +99,9 @@ const getUserCurrentlyPlaying = () => {
 }
 
 export {
-    getUserCurrentlyPlaying,
+    getUserCurrentlyPlayer,
+    getUserAvailableDevices,
+    changePlayback,
     playSong,
     resumeSong,
     pauseSong,
@@ -85,4 +109,5 @@ export {
     previousSong,
     PAUSED,
     PLAYER,
+    DEVICE_ID
 };

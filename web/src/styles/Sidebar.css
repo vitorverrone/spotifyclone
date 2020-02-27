@@ -1,7 +1,7 @@
 .sidebar {
     background: #040404;
     color: #fff;
-    height: calc(100vh - 100px);
+    height: calc(100vh - 99px);
     left: 0;
     grid-area: sidebar;
     position: relative;
@@ -9,17 +9,15 @@
     flex-direction: column;
 }
 
+.-device .sidebar { height: calc(100vh - 129px); }
+
 .sidebar li { opacity: .7; }
 
 .sidebar li:hover { opacity: 1; }
 
-.sidebar-items {
-    padding: 30px 25px 0;
-}
+.sidebar-items { padding: 30px 25px 0; }
 
-.sidebar-list {
-    margin: 0 -15px 5px;
-}
+.sidebar-list { margin: 0 -15px 5px; }
 
 .sidebar-list li {
     align-items: center;

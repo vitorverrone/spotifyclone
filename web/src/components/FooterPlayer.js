@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
 
-import { PLAYER, resumeSong, pauseSong, nextSong, previousSong } from '../services/api-player';
+import { DEVICE_ID, PLAYER, getUserAvailableDevices, changePlayback,  resumeSong, pauseSong, nextSong, previousSong } from '../services/api-player';
 
 import { joinArtists, convertDuration } from '../services/general';
 
 import '../styles/FooterPlayer.css';
 
 import { IoMdPlay, IoMdPause } from 'react-icons/io';
-import { MdSkipNext, MdSkipPrevious } from 'react-icons/md';
+import { MdSkipNext, MdSkipPrevious, MdComputer } from 'react-icons/md';
 import { FiVolume2 } from 'react-icons/fi';
 
-function FooterPlayer() {
+function FooterPlayer({ currentlyPlaying }) {
 	const 
 		[isPlaying, setIsPlaying] = useState(false),
 		[currentSong, setCurrentSong] = useState([]),
@@ -21,7 +21,9 @@ function FooterPlayer() {
 		// [trackProgressMS, setTrackProgressMS]  = useState(''),
 		[trackProgress, setTrackProgress]  = useState('0:00'),
 		[trackPercentage, setTrackPercentage]  = useState('0'),
-		[volumePercentage, setVolumePercentage]  = useState('0');
+		[volumePercentage, setVolumePercentage]  = useState('0'),
+		[availableDevices, setAvailableDevices]  = useState([]),
+		[showDevicesMenu, setShowDevicesMenu]  = useState(false);
 
 	if(PLAYER) {
 		PLAYER.addListener('player_state_changed', state => {
@@ -39,6 +41,24 @@ function FooterPlayer() {
 			});
 		});
 	}
+
+	useEffect(() => {
+		getUserDevices();
+	}, []);
+
+	async function getUserDevices() {
+		const response = await getUserAvailableDevices();
+		setAvailableDevices(response['devices']);
+	};
+
+	useEffect(() => {
+		if(currentlyPlaying && currentlyPlaying['item']) {
+			const track = currentlyPlaying['item'];
+			setTrackImage(track['album']['images'][0]['url']);
+			setCurrentArtists(joinArtists(track['artists']));
+			setCurrentSong(track['name']);
+		}
+	}, [currentlyPlaying])
 
 	// const volume = document.querySelector('.footer-player__options-volume');
 	// volume.addEventListener('click', function(e) {
@@ -110,12 +130,8 @@ function FooterPlayer() {
 				</div>
 			)
 		}
-		return (
-			<></>
-		)
+		return (<></>)
 	}
-
-
 
 	function VolumeBar() {
 		const divStyle = {
@@ -128,12 +144,64 @@ function FooterPlayer() {
 		)
 	}
 
+	function AnotherDevice() {
+		if(currentlyPlaying && currentlyPlaying['device'] && currentlyPlaying['device']['id'] !== DEVICE_ID) {
+			setIsPlaying(currentlyPlaying['is_playing']);
+			return (
+				<div className="footer-player__device">
+					<span> <FiVolume2 /> </span> 
+					<p>Você está ouvindo em <b>{currentlyPlaying['device']['name']}</b></p>
+				</div>
+			)
+		}
+		
+		return (<></>);
+	}
+
+	function Devices() {
+		if(availableDevices.length) {
+			return (
+				<>
+					<ul className="footer-player__devices-menu-items">
+						{availableDevices.map((key, index) => {
+							const 
+								active = key['is_active'];
+
+							return (
+								<li 
+									key={key.id} 
+									className={`available-device -${active}`} 
+									onClick={() => changePlayback(key['id'])}
+								>
+									<MdComputer className="available-device-icon" />
+									<div>
+										<p>{key['name']}</p>
+										<p> <FiVolume2 /> Spotify Conect </p>
+									</div>
+								</li>
+                            );
+                        })}
+					</ul>
+				</>
+			)
+		}
+		return (<></>);
+	}
+
+	// function changePlaybackCallback(index) {
+	// 	const isItemSelected = this.state.selectedItem === i;
+  	// 	return isItemSelected ? "bg-light-gray" : "";
+	// 	console.log('vai mudar', index);
+	// }
+
 	return (
-        <div className="footer-player">
+        <div className={`footer-player`}>
 			<div className="footer-player__current">
 				<TrackImage />
-				<p className="footer-player__current-track">{currentSong}</p>
-				<p className="footer-player__current-artists">{currentArtists}</p>
+				<div>
+					<p className="footer-player__current-track">{currentSong}</p>
+					<p className="footer-player__current-artists">{currentArtists}</p>
+				</div>
 			</div>
 			<div className="footer-player__controls">
 				<div className="footer-player__controls-song">
@@ -149,9 +217,16 @@ function FooterPlayer() {
 				</div>
 			</div>
 			<div className="footer-player__options">
+				<div className={`footer-player__devices-menu -${showDevicesMenu}`}>
+					<h3>Conectar a um dispositivo</h3>
+					<img src="https://open.scdn.co/cdn/images/connect_header@1x.ecc6912d.png" alt="Conect Device" />
+					<Devices />
+				</div>
+				<MdComputer onClick={() => setShowDevicesMenu(!showDevicesMenu)} className="icon-devices" />
 				<FiVolume2 />
 				<VolumeBar />
 			</div>
+			<AnotherDevice />
 		</div>
 	);
 }

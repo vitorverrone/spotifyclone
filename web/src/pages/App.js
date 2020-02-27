@@ -3,9 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import { verify, getUserData } from '../services/api';
 import { getUsersPlaylist } from '../services/api-search';
-import { getUserCurrentlyPlaying } from '../services/api-player';
-
-import { getCookie } from '../services/cookies';
+import { DEVICE_ID, PLAYER, getUserCurrentlyPlayer } from '../services/api-player';
 
 import '../styles/global.css';
 
@@ -21,7 +19,8 @@ function App() {
         [cardData, setcardData] = useState([]),
         [userData, setUserData] = useState([]),
         [userPlaylists, setUserPlaylists] = useState([]),
-        [currentlyPlaying, setcurrentlyPlaying] = useState([]);
+        [currentlyPlaying, setcurrentlyPlaying] = useState([]),
+        [anotherDevice, setAnotherDevice] = useState('');
 
     function updateCards(childData) {
         setcardData(childData);
@@ -29,7 +28,6 @@ function App() {
 
     async function userDataFunction() {
         const response = await getUserData();
-        console.log('entrou aqui', response);
         if(response) {
             console.log('entrou aqui if');
             setUserData(response); 
@@ -41,35 +39,29 @@ function App() {
     function useSetUserData(newData) { setUserData(newData) }
 
     useEffect(() => {
-
+        verify();
         const script = document.createElement('script');
         script.src = "https://sdk.scdn.co/spotify-player.js";
         script.async = true;
         document.body.appendChild(script);
         document.body.removeChild(script);
 
-        if(verify()) { userDataFunction(); }
+        userDataFunction();
+        currentlyPlayingFunction();
     }, []);
-
-    useEffect(() => {
-        verify();
-        const access_token = getCookie('access_token');
-        if(access_token) {
-            userDataFunction(access_token);
-            currentlyPlayingFunction();
-        }
-    }, []);
-
 
     async function currentlyPlayingFunction() {
-        const response = await getUserCurrentlyPlaying();
+        const response = await getUserCurrentlyPlayer();
+        response && response['device'] && response['device']['id'] !== DEVICE_ID ? setAnotherDevice('-device') : setAnotherDevice('');
         setcurrentlyPlaying(response);
     }
+
+    if(PLAYER) PLAYER.addListener('player_state_changed', () => currentlyPlayingFunction(), false);
 
 	return (
         <Router>
             <Switch>
-                <div className="main-wrapper">
+                <div className={`main-wrapper ${anotherDevice}`}>
                     <Sidebar playlists={userPlaylists} currentlyPlaying={currentlyPlaying} />
                     <div className="main">
                         <Header updateCards={updateCards} userData={userData} userCallbackFunction={useSetUserData}/>

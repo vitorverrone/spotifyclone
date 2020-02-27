@@ -5,25 +5,25 @@
     display: grid;
     grid-area: footer;
     justify-content: space-between;
-    height: 100px;
     padding: 15px;
+    position: relative;
     grid-template-columns: 1fr 1fr 1fr;
 }
 
-.footer-player__current { position: relative; }
+.-device .footer-player { padding-bottom: 45px; }
+
+.footer-player__current { 
+    position: relative; 
+    display: flex;
+    align-items: center;
+}
 
 .footer-player__current-image {
-    margin-top: 20px;
-    padding-top: 100%;
-    position: absolute;
+    max-width: 50px;
+    margin-right: 10px;
 }
 
-.footer-player__current-image img {
-    max-width: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-}
+.footer-player__current-image img { max-width: 100%; }
 
 .footer-player__current-track {
     font-size: .9em;
@@ -90,6 +90,7 @@
     justify-self: right;
     align-items: center;
     display: flex;
+    position: relative;
 }
 
 .footer-player__options-volume {
@@ -109,4 +110,99 @@
     height: 100%;
     position: absolute;
     transition: all .2s ease;
+}
+
+.footer-player__devices-menu {
+    background: #282828;
+    box-shadow: 0 4px 12px 4px rgba(0,0,0,.5);
+    border-radius: 4px;
+    padding: 20px;
+    text-align: center;
+    position: absolute;
+    display: none;
+    bottom: 35px;
+    left: -125px;
+    width: 270px;
+}
+
+.footer-player__devices-menu:before {
+    bottom: -20px;
+    left: auto;
+    right: 138px;
+    margin-left: -10px;
+    margin-right: -10px;
+    border: 10px solid transparent;
+    border-top-color: #282828;
+    position: absolute;
+    content: "";
+}
+
+.footer-player__devices-menu h3 {
+    font-size: 1.3rem;
+    margin-bottom: 20px;
+}
+
+.footer-player__devices-menu img {
+    max-width: 90%;
+    margin: auto;
+}
+
+.footer-player__devices-menu.-true { display: block; }
+
+.footer-player__devices-menu-items {
+    text-align: left;
+    margin-top: 20px;
+}
+
+.footer-player__devices-menu-items li {
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    font-size: .8rem;
+    margin: 15px 0;
+}
+
+.footer-player__devices-menu-items li.-true{
+    color: #58ba55;
+}
+
+.footer-player__devices-menu-items li p {
+    display: flex;
+    align-items: center;
+    margin: 5px 0;
+}
+
+.available-device-icon {
+    font-size: 2rem;
+    margin-right: 15px;
+}
+
+.icon-devices { 
+    cursor: pointer;
+    margin-right: 15px; 
+}
+
+.footer-player__device {
+    background: #58ba55;
+    color: #fff;
+    text-align: right;
+    padding: 5px 15px;
+    position: absolute;
+    width: 100%;
+    left: 0;
+    bottom: 0;
+    font-size: .8rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.footer-player__device span {
+    border: 1px dashed white;
+    border-radius: 50%;
+    padding: 2px;
+    display: flex;
+    margin-right: 5px;
+    align-items: center;
+    justify-content: center;
 }
