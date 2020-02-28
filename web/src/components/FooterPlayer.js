@@ -19,8 +19,8 @@ function FooterPlayer({ currentlyPlaying }) {
 		[trackImage, setTrackImage] = useState(''),
 		// [trackDurationMS, setTrackDurationMS]  = useState('0:00'),
 		// [trackProgressMS, setTrackProgressMS]  = useState(''),
-		[trackProgress, setTrackProgress]  = useState('0:00'),
-		[trackPercentage, setTrackPercentage]  = useState('0'),
+		[trackProgress/*, setTrackProgress*/]  = useState('0:00'),
+		[trackPercentage/*, setTrackPercentage*/]  = useState('0'),
 		[volumePercentage, setVolumePercentage]  = useState('0'),
 		[availableDevices, setAvailableDevices]  = useState([]),
 		[showDevicesMenu, setShowDevicesMenu]  = useState(false);
@@ -159,7 +159,7 @@ function FooterPlayer({ currentlyPlaying }) {
 	}
 
 	function Devices() {
-		if(availableDevices.length) {
+		if(availableDevices && availableDevices.length) {
 			return (
 				<>
 					<ul className="footer-player__devices-menu-items">

@@ -38,12 +38,13 @@ function Header({ updateCards, userData, userCallbackFunction }) {
     }
 
     useEffect(() => {
-        setHeader()
+        console.log('mudou userData');
+        HeaderLogin(userData);
     }, [userData]);
 
-    function setHeader() {
+    function HeaderLogin({ userData }) {
         console.log('mudou o header');
-        if(userData.display_name) {
+        if(userData && userData.display_name) {
             return (
                 <div className={`user-header ${menuActivated}`} onClick={activeMenu}>
                     <AiOutlineUser className="user-header__icon" />
@@ -54,11 +55,10 @@ function Header({ updateCards, userData, userCallbackFunction }) {
                     </ul>
                 </div>
             );
-        } else {
-            return (
-                <button className="login-button" onClick={login}>Entrar</button>
-            );
         };
+        return (
+            <button className="login-button" onClick={login}>Entrar</button>
+        );
     }
 
     function logout() {
@@ -79,7 +79,9 @@ function Header({ updateCards, userData, userCallbackFunction }) {
                     <input type="text" className="search-form__input" onKeyUp={e => searchSomething(e.target.value)} placeholder="Busque artistas, músicas ou podcasts" />
                 </form>
             </div>
-            <div className="header-col"> {setHeader()}</div>
+            <div className="header-col">
+                <HeaderLogin userData={userData} />
+            </div>
         </div>
 	);
 }

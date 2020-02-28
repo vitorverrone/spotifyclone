@@ -33,16 +33,11 @@ function CollectionTracks() {
         return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
     }
 
-	return (
-        <div className="content liked-tracks">
-            <div className="liked-tracks__info">
-                <div className="liked-tracks__info-icon"></div>
-                <h4>Músicas curtidas</h4>
-                <p>{totalTracks} Músicas</p>
-            </div>
-            <ul className="liked-tracks__tracks">
-                {
-                    likedTracks.map(key => {
+    function LikedTracksComponent() {
+        if(likedTracks) {
+            return(
+                <ul className="liked-tracks__tracks">
+                    {likedTracks.map(key => {
                         const 
                             track = key['track'],
                             trackName = track['name'],
@@ -65,9 +60,21 @@ function CollectionTracks() {
                                 </div>
                             </li>
                         );
-                    })
-                }
-            </ul>
+                    })}
+                </ul>
+            );
+        }
+        return(<></>);
+    }
+
+	return (
+        <div className="content liked-tracks">
+            <div className="liked-tracks__info">
+                <div className="liked-tracks__info-icon"></div>
+                <h4>Músicas curtidas</h4>
+                <p>{totalTracks} Músicas</p>
+            </div>
+            <LikedTracksComponent />
         </div>
 	);
 }

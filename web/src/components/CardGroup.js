@@ -14,7 +14,7 @@ function CardGroup({ cards }) {
 
     useEffect(() => {
         setNewCards(Object.keys(cards).map((key) => cards[key]));
-
+    
         if(newCards.length) { 
             setAlbumCards(newCards[0]['items']);
             setArtistCards(newCards[1]['items']);

@@ -23,12 +23,11 @@ function Sidebar({ playlists }) {
         );
     };
 
-
     useEffect(() => {
-        Playlists()
+        Playlists(playlists);
     }, [playlists]);
 
-    function Playlists() {
+    function Playlists({ playlists }) {
         if(playlists && playlists.length) {
             return (
                 <>
@@ -63,7 +62,7 @@ function Sidebar({ playlists }) {
                 </ul>
             </div>
             <hr className="sidebar-divider"/>
-            <Playlists />
+            <Playlists playlists={playlists} />
         </div>
 	);
 }
