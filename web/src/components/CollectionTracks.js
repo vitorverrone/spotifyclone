@@ -5,7 +5,7 @@ import { playSong } from '../services/api-player';
 
 import { joinArtists } from '../services/general';
 
-import { IoMdMusicalNote } from 'react-icons/io';
+import { IoMdMusicalNote, IoMdPause } from 'react-icons/io';
 
 import '../styles/CollectionTracks.css';
 
@@ -33,23 +33,33 @@ function CollectionTracks() {
         return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
     }
 
+    function playSongCallback(uri, key) {
+        playSong(uri);
+        likedTracks.map(key => {
+            key['active'] = false
+        });
+        likedTracks[key]['active'] = true;
+    }
+
     function LikedTracksComponent() {
         if(likedTracks) {
             return(
                 <ul className="liked-tracks__tracks">
-                    {likedTracks.map(key => {
+                    {likedTracks.map((key, index) => {
                         const 
                             track = key['track'],
                             trackName = track['name'],
                             artists = joinArtists(track['artists']),
                             album = track['album']['name'],
                             duration = track['duration_ms'],
-                            uri = track['uri'];
+                            uri = track['uri'],
+                            active = key['active'] || false,
+                            icon = active ? <IoMdPause/> : <IoMdMusicalNote/>;
 
                         return (
-                            <li key={track.id} onClick={e => playSong(uri)} className="liked-tracks__track">
+                            <li key={track.id} onClick={() => playSongCallback(uri, index)} className={`liked-tracks__track -${active}`}>
                                 <div className="liked-tracks__track-icon">
-                                    <IoMdMusicalNote/>
+                                    {icon}
                                 </div>
                                 <div className="liked-tracks__track-name">
                                     <p>{trackName}</p>

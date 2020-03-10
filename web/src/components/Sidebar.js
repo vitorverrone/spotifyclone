@@ -24,10 +24,10 @@ function Sidebar({ playlists }) {
     };
 
     useEffect(() => {
-        Playlists(playlists);
+        Playlists();
     }, [playlists]);
 
-    function Playlists({ playlists }) {
+    function Playlists() {
         if(playlists && playlists.length) {
             return (
                 <>

@@ -36,6 +36,10 @@
     margin-bottom: 20px;
 }
 
+.liked-tracks__track.-true {
+    color: #58ba55;
+}
+
 .liked-tracks__track-icon {
     margin: 2px 10px 0 0;
 }
